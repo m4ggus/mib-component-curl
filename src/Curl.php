@@ -181,7 +181,7 @@ class Curl
      */
     private function validateResult($result)
     {
-        if ($result == false) {
+        if ($result === false) {
             $exception = $this->createExceptionFromErrorCode();
             throw $exception;
         }
