@@ -1,0 +1,14 @@
+{
+	"name": "mib/curl",
+	"description": "curl wrapper lib",
+	"type": "library",
+	"license": "MIT",
+	"autoload": {
+		"psr-4": {
+			"Mib\\Component\\Curl\\": "src/"
+		}
+	},
+	"require": {
+
+	}
+}
