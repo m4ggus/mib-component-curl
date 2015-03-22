@@ -47,6 +47,18 @@ class Curl
     }
 
     /**
+     * Creates an exception from the curl error code
+     * @return Exception
+     */
+    protected function createExceptionFromErrorCode()
+    {
+        $errorCode = curl_errno($this->resource);
+        $errorStr  = curl_error($this->resource);
+
+        return new Exception(sprintf('%s: %s', $errorCode, $errorStr));
+    }
+
+    /**
      * Performs the curl session
      * @return bool|string
      */
@@ -118,12 +130,17 @@ class Curl
      * Sends the request as a get request and returns the response
      * or a boolean depending on the settings and the status
      * @return bool|string
+     * @throws Exception
      */
     public function get()
     {
         $this->validateUrl();
 
-        return $this->exec();
+        $result = $this->exec();
+
+        $this->validateResult($result);
+
+        return $result;
     }
 
     /**
@@ -155,6 +172,18 @@ class Curl
     {
         if ($this->url === null) {
             throw new Exception('an url have to be set in order to complete the request');
+        }
+    }
+
+    /**
+     * @param $result
+     * @throws Exception
+     */
+    private function validateResult($result)
+    {
+        if ($result == false) {
+            $exception = $this->createExceptionFromErrorCode();
+            throw $exception;
         }
     }
 }

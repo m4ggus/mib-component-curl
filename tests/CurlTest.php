@@ -30,6 +30,8 @@ class TestableCurl extends Curl
     protected function exec()
     {
         $this->exec = true;
+
+        return $this->exec;
     }
 }
 
